@@ -19,10 +19,9 @@ passport.deserializeUser((id,done)=>{
 
 passport.use('local.signup',new LocalStrategy({
     usernameField:'email',
-    passwordField:'password',
+    passwordField:'password', 
     passReqToCallback:true //All of the user's data wil be passed to callback
 }, (req,email,password,done)=>{
-    
     User.findOne({'email':email},(err,user)=>{
         if(err)
             return done(err)
@@ -34,7 +33,8 @@ passport.use('local.signup',new LocalStrategy({
         newUser.email=req.body.email;
         newUser.password=req.body.password;
         
-        newUser.save((err)=>{
+        newUser.save((err,data)=>{
+            console.log(data)
             done(null,newUser)
         });
     });
