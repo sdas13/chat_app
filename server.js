@@ -1,57 +1,67 @@
-const express = require('express');
-const bodyParser=require('body-parser');
-const ejs=require('ejs');
-const http=require('http');
-const cookieParser=require('cookie-parser');//save cookies in the browser
-const validator=require('express-validator');//serverside validate
-const session=require('express-session');//store sessions
-const MongoStore=require('connect-mongo')(session);//using mongo store session data is stored in database
-const mongoose=require('mongoose');
-const flash=require('connect-flash');//flash messages
-const passport=require('passport');
-const container=require('./container');
+const mongo = require('mongodb').MongoClient;
+const io = require('socket.io').listen(8888).sockets;
 
-container.resolve(function(users){
-    
-    mongoose.Promise=global.Promise;
-    mongoose.connect('mongodb://localhost/chat_app');
-    
-    const app=SetupExpress();
-    
-    function SetupExpress(){
-        const app=express();
-        const server=http.createServer(app);
-        server.listen(8888,function(){
-            console.log('Listening on port 8888...');
+mongo.connect('mongodb://localhost/chat_app', function (err, db) {
+
+    if (err)
+        throw err;
+
+    console.log('Mongodb connected...');
+
+    //connect to socket.io
+    io.on('connection', function (socket) {
+        let chat = db.collection('chats');
+
+        //Create function to send status
+        sendStatus = function (s) {
+            socket.emit('status', s);
+        }
+
+        //get first 100 chats
+        chat.find().sort({
+            _id: 1
+        }).limit(100).toArray(function (err, res) {
+            if (err)
+                throw err
+
+            //Emit messages
+            socket.emit('output', res)
         })
-        
-        ConfigureExpress(app);
-        
-        //setup route
-        const router=require('express-promise-router')();
-        users.SetRouting(router);
-    
-        app.use(router);
-    }
-    
-    function ConfigureExpress(app){
-        require('./passport/passport-local.js')
-        
-        app.use(express.static('public'));
-        app.use(cookieParser());
-        app.set('view engine','ejs');
-        app.use(bodyParser.json());
-        app.use(bodyParser.urlencoded({extended:true}));
-        app.use(validator());
-        app.use(session({ 
-            secret:'thisisasecretkey',
-            resave:true,
-            saveInitialized:true,
-            store:new MongoStore({mongooseConnection:mongoose.connection})
-        }));
-        app.use(flash());
-        app.use(passport.initialize());
-        app.use(passport.session());
-    }
-    
+
+        //Handle input events
+        socket.on('input', function (data) {
+            let name = data.name;
+            let message = data.message;
+
+            //check name & message and send message
+            if (name == '' || message == '')
+                sendStatus('Please enter a name or message')
+            else {
+                //Insert message
+                chat.insert({
+                    name: name,
+                    message: message
+                }, function () {
+                    socket.emit('output', [data]);
+                    //send status
+                    sendStatus({
+                        message: 'Message sent',
+                        clear: true
+                    })
+                })
+            }
+
+        })
+
+        //Handle Clear
+        socket.on('clear', function (data) {
+            chat.remove({}, function () {
+                socket.emit('cleared')
+            })
+        })
+
+
+    })
+
+
 })
