@@ -1,7 +1,7 @@
 const mongo = require('mongodb').MongoClient;
 const io = require('socket.io').listen(8888).sockets;
 
-mongo.connect('mongodb://localhost/chat_app', function (err, db) {
+mongo.connect('mongodb://localhost', function (err, client) {
 
     if (err)
         throw err;
@@ -10,7 +10,9 @@ mongo.connect('mongodb://localhost/chat_app', function (err, db) {
 
     //connect to socket.io
     io.on('connection', function (socket) {
-        let chat = db.collection('chats');
+        console.log('New connection...');
+        
+        let chat = client.db('chat_app').collection('chats');
 
         //Create function to send status
         sendStatus = function (s) {
@@ -30,6 +32,8 @@ mongo.connect('mongodb://localhost/chat_app', function (err, db) {
 
         //Handle input events
         socket.on('input', function (data) {
+            console.log('Input received...',data);
+            
             let name = data.name;
             let message = data.message;
 
@@ -42,26 +46,17 @@ mongo.connect('mongodb://localhost/chat_app', function (err, db) {
                     name: name,
                     message: message
                 }, function () {
-                    socket.emit('output', [data]);
+                    io.emit('output', [data]);
                     //send status
                     sendStatus({
                         message: 'Message sent',
                         clear: true
                     })
+                    console.log('Emit input message',data)
                 })
             }
 
         })
-
-        //Handle Clear
-        socket.on('clear', function (data) {
-            chat.remove({}, function () {
-                socket.emit('cleared')
-            })
-        })
-
-
     })
-
 
 })
