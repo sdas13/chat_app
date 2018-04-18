@@ -74,14 +74,16 @@
                             var message = document.createElement('div');
                             message.setAttribute('class', 'chat-message');
                             message.textContent = data[x].name + ': ' + data[x].message;
-                            //messages.appendChild(message)   ;
-                            messages.insertBefore(message, messages.firstChild);
+                            messages.appendChild(message)   ;
+                            //messages.insertBefore(message, messages.firstChild);
                         }
                     }
                 })
 
                 //get status from server
                 socket.on('status', function (data) {
+                    console.log(data);
+                    
                     //get message status
                     setStatus(typeof (data) == 'object' ? data.message : data);
 

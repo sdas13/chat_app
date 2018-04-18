@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/sdas13/chat_app#readme",
   "dependencies": {
+    "express": "^4.16.3",
     "mongodb": "^3.0.6",
     "socket.io": "^2.1.0"
   }
