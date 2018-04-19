@@ -1,17 +1,31 @@
 const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const passport = require('passport');
+const mongoose = require('mongoose');
 const mongo = require('mongodb').MongoClient;
 
-let app = express();
-let http = require('http').Server(app);
+let app = express(); //app is just a callback, similar to function(req,res){}
+let http = require('http').Server(app); //http.Server() works same as http.createServer() method
 let io = require('socket.io')(http);
 //const io = require('socket.io').listen(8888).sockets;
 
-http.listen(8888, () => {
-    console.log('Server Listening on port 8888...');
-})
+const port = 8888;
+app.use(cors());
+app.use(express.static(path.join(__dirname,'public')));
+app.use(bodyParser.json());
+
+const users=require('./routes/users');
+
+app.use('/users',users);
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
+})
+
+http.listen(port, () => {
+    console.log(`Server started on port ${port}...`);
 })
 
 mongo.connect('mongodb://localhost', function (err, client) {
@@ -19,7 +33,7 @@ mongo.connect('mongodb://localhost', function (err, client) {
     if (err)
         throw err;
 
-    console.log('Mongodb connected...');
+    console.log('Mongodb connected !!');
 
     //connect to socket.io
     io.on('connection', function (socket) {
@@ -29,7 +43,7 @@ mongo.connect('mongodb://localhost', function (err, client) {
 
         //Create function to send status
         sendStatus = function (s) {
-            console.log('Send status');            
+            console.log('Send status');
             socket.emit('status', s);
         }
 
