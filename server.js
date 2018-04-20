@@ -88,3 +88,4 @@ mongo.connect('mongodb://localhost', function (err, client) {
     })
 
 })
+
