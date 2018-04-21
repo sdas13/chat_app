@@ -5,6 +5,17 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const mongo = require('mongodb').MongoClient;
+const config = require('./config/database');
+
+mongoose.connect(config.database);
+
+mongoose.connection.once('open',function(){
+    console.log(`Database connection successfull !!`);
+});
+
+mongoose.connection.on('error',function(err) {
+    console.log(`Database connection error: ${err}`);
+});
 
 let app = express(); //app is just a callback, similar to function(req,res){}
 let http = require('http').Server(app); //http.Server() works same as http.createServer() method
@@ -13,12 +24,12 @@ let io = require('socket.io')(http);
 
 const port = 8888;
 app.use(cors());
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
-const users=require('./routes/users');
+const users = require('./routes/users');
 
-app.use('/users',users);
+app.use('/users', users);
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -28,6 +39,7 @@ http.listen(port, () => {
     console.log(`Server started on port ${port}...`);
 })
 
+/*
 mongo.connect('mongodb://localhost', function (err, client) {
 
     if (err)
@@ -88,4 +100,4 @@ mongo.connect('mongodb://localhost', function (err, client) {
     })
 
 })
-
+*/
