@@ -27,6 +27,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
+app.use(morgan('dev'));
 const users = require('./routes/users');
 
 app.use('/users', users);
