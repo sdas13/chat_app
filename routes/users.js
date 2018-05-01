@@ -43,14 +43,6 @@ function ensureToken(req, res, next) {
     }
 }
 
-
-router.get('/api', function (req, res) {
-    res.json({
-        text: 'my api'
-    })
-})
-
-
 router.post('/register', function (req, res) {
     let user = new User();
 
