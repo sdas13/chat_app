@@ -18,8 +18,8 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    admin:{
-        type:Boolean
+    admin: {
+        type: Boolean
     }
 })
 
@@ -47,4 +47,13 @@ module.exports.addUser = function (newUser, callback) {
     // })
 
     newUser.save(callback);
+}
+
+module.exports.comparePassword = function (candidatePassword, hash, callback) {
+    // bcrypt.compare(candidatePassword,hash,function (err, isMatch) {
+    //     if(err)
+    //         callback(err)
+    //     callback(false,isMatch)    
+    // })
+    callback(false, true);
 }

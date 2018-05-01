@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
+const passportConfig=require('./config/passport');
 const mongoose = require('mongoose');
 const mongo = require('mongodb').MongoClient;
 const config = require('./config/database');
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 
 app.use(passport.initialize());
 app.use(passport.session());
+passportConfig(passport);
 
 //app.use(morgan('dev'));
 const users = require('./routes/users');
