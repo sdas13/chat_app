@@ -68,13 +68,13 @@
                 console.log('Connected to socket...');
 
                 socket.on('output', function (data) {
-                    console.log('Output received...',data);
+                    console.log('Output received...', data);
                     if (data.length) {
                         for (var x = 0; x < data.length; x++) {
                             var message = document.createElement('div');
                             message.setAttribute('class', 'chat-message');
                             message.textContent = data[x].name + ': ' + data[x].message;
-                            messages.appendChild(message)   ;
+                            messages.appendChild(message);
                             //messages.insertBefore(message, messages.firstChild);
                         }
                     }
@@ -83,7 +83,7 @@
                 //get status from server
                 socket.on('status', function (data) {
                     console.log(data);
-                    
+
                     //get message status
                     setStatus(typeof (data) == 'object' ? data.message : data);
 

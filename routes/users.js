@@ -31,7 +31,7 @@ router.get('/protected', ensureToken, function (req, res) {
 })
 
 function ensureToken(req, res, next) {
-   // console.log(req.headers);
+    // console.log(req.headers);
 
     const bearerHeader = req.headers["authorization"];
     if (typeof bearerHeader !== 'undefined') {
@@ -88,7 +88,7 @@ router.post('/authenticate', function (req, res) {
                 let token = jwt.sign(JSON.stringify(user), config.secret)
                 res.json({
                     success: true,
-                    token: 'Bearer ' + token,
+                    token: 'bearer ' + token,
                     user: {
                         id: user._id,
                         username: user.username,
