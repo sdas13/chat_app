@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   username: string;
   email: string;
   password: string;
-
+  
   constructor(private validateService:ValidateService, private flashMessage:FlashMessagesService, private authService:AuthService, private router:Router) {}
 
   ngOnInit() {}
@@ -39,8 +39,8 @@ export class RegisterComponent implements OnInit {
       return false;
     }
 
-    this.authService.registerUser(user).subscribe(data=>{
-      if(JSON.parse(data._body).success){
+    this.authService.registerUser(user).subscribe(response=>{
+      if(response.success){
         this.flashMessage.show('You are now registered',{cssClass:'alert-success',timeout:3000});
         this.router.navigate(['/login'])
       }
