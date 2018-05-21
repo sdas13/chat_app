@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,21 @@ export class AuthService {
 
   authenticateUser(user){
     return this.http.post('http://localhost:8888/users/authenticate',user);
+  }
+
+  getProfile(){
+    this.loadToken();
+    let httpOptions={
+      headers:new HttpHeaders({
+        'Authorization':this.authToken
+      })
+    }
+    return this.http.get('http://localhost:8888/users/profile',httpOptions);
+  }
+
+  loadToken(){
+    let token=localStorage.getItem('id_token');
+    this.authToken=token;
   }
 
   storeUserData(token,user){
