@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { tokenNotExpired } from 'angular2-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class AuthService {
   loadToken(){
     let token=localStorage.getItem('id_token');
     this.authToken=token;
+  }
+
+  loggedIn(){
+    return tokenNotExpired('id_token');
   }
 
   storeUserData(token,user){
