@@ -39,7 +39,11 @@ app.use('/users', users);
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
-})
+});
+
+app.get('*',function (req,res) {
+    res.sendFile(path.join(__dirname,'public/index.html'));
+});
 
 http.listen(port, () => {
     console.log(`Server started on port ${port}...`);

@@ -17,7 +17,7 @@
       <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
         <a class="nav-link" [routerLink]="['/register']">Register</a>
       </li>
-      <li >
+      <li *ngIf="authService.loggedIn()">
         <a class="nav-link" href="#" (click)="onLogout()">Logout</a>
       </li>
     </ul>
