@@ -23,7 +23,7 @@ let http = require('http').Server(app); //http.Server() works same as http.creat
 let io = require('socket.io')(http);
 //const io = require('socket.io').listen(8888).sockets;
 
-const port = 8888;
+const port = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());

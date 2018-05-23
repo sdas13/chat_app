@@ -726,10 +726,10 @@ var AuthService = /** @class */ (function () {
         this.http = http;
     }
     AuthService.prototype.registerUser = function (user) {
-        return this.http.post('http://localhost:8888/users/register', user);
+        return this.http.post('users/register', user);
     };
     AuthService.prototype.authenticateUser = function (user) {
-        return this.http.post('http://localhost:8888/users/authenticate', user);
+        return this.http.post('users/authenticate', user);
     };
     AuthService.prototype.getProfile = function () {
         this.loadToken();
@@ -738,7 +738,7 @@ var AuthService = /** @class */ (function () {
                 'Authorization': this.authToken
             })
         };
-        return this.http.get('http://localhost:8888/users/profile', httpOptions);
+        return this.http.get('users/profile', httpOptions);
     };
     AuthService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
