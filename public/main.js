@@ -709,6 +709,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var angular2_jwt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angular2-jwt */ "./node_modules/angular2-jwt/angular2-jwt.js");
 /* harmony import */ var angular2_jwt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(angular2_jwt__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -721,15 +722,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AuthService = /** @class */ (function () {
     function AuthService(http) {
         this.http = http;
     }
     AuthService.prototype.registerUser = function (user) {
-        return this.http.post('users/register', user);
+        return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiEndpoint + 'users/register', user);
     };
     AuthService.prototype.authenticateUser = function (user) {
-        return this.http.post('users/authenticate', user);
+        return this.http.post(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiEndpoint + 'users/authenticate', user);
     };
     AuthService.prototype.getProfile = function () {
         this.loadToken();
@@ -738,7 +740,7 @@ var AuthService = /** @class */ (function () {
                 'Authorization': this.authToken
             })
         };
-        return this.http.get('users/profile', httpOptions);
+        return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiEndpoint + 'users/profile', httpOptions);
     };
     AuthService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
@@ -831,7 +833,8 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 var environment = {
-    production: false
+    production: false,
+    apiEndpoint: 'http://localhost:8080/'
 };
 /*
  * In development mode, to ignore zone related error stack frames such as

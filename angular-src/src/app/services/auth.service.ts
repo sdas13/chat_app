@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tokenNotExpired } from 'angular2-jwt';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,11 @@ export class AuthService {
   constructor(private http:HttpClient) { }
 
   registerUser(user){
-    return this.http.post('users/register',user);
+    return this.http.post(environment.apiEndpoint+'users/register',user);
   }
 
   authenticateUser(user){
-    return this.http.post('users/authenticate',user);
+    return this.http.post(environment.apiEndpoint+'users/authenticate',user);
   }
 
   getProfile(){
@@ -27,7 +28,7 @@ export class AuthService {
         'Authorization':this.authToken
       })
     }
-    return this.http.get('users/profile',httpOptions);
+    return this.http.get(environment.apiEndpoint+'users/profile',httpOptions);
   }
 
   loadToken(){
