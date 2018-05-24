@@ -5,7 +5,6 @@ const cors = require('cors');
 const passport = require('passport');
 const passportConfig=require('./config/passport');
 const mongoose = require('mongoose');
-const mongo = require('mongodb').MongoClient;
 const config = require('./config/database');
 
 mongoose.connect(config.database);
@@ -16,6 +15,7 @@ mongoose.connection.once('open',function(){
 
 mongoose.connection.on('error',function(err) {
     console.log(`Database connection error: ${err}`);
+    const mongo = require('mongodb').MongoClient;
 });
 
 let app = express(); //app is just a callback, similar to function(req,res){}
@@ -26,7 +26,6 @@ let io = require('socket.io')(http);
 const port = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -37,6 +36,7 @@ const users = require('./routes/users');
 
 app.use('/users', users);
 
+app.use(bodyParser.json());
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
