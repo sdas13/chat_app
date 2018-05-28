@@ -26,7 +26,7 @@ let io = require('socket.io')(http);
 const port = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig(passport);
@@ -36,7 +36,6 @@ const users = require('./routes/users');
 
 app.use('/users', users);
 
-app.use(bodyParser.json());
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });

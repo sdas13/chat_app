@@ -16,13 +16,14 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { ChatWindowComponent } from './components/chat-window/chat-window.component';
 
-const appRoutes:Routes=[
-  {path:'',component:HomeComponent},
-  {path:'register',component:RegisterComponent},
-  {path:'login',component:LoginComponent},
-  {path:'dashboard',component:DashboardComponent, canActivate:[AuthGuard]},
-  {path:'profile',component:ProfileComponent, canActivate:[AuthGuard]}
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({
@@ -33,7 +34,8 @@ const appRoutes:Routes=[
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,7 @@ const appRoutes:Routes=[
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [ ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
