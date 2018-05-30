@@ -30,8 +30,8 @@ router.post('/register', function (req, res) {
 
 router.post('/authenticate', function (req, res) {
 
-    let username = req.body.username
-    let password = req.body.password
+    let username = req.body.username;
+    let password = req.body.password;
 
     User.findUserByName(username, function (err, user) {
         if (err)

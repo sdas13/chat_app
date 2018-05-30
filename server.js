@@ -3,17 +3,18 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
-const passportConfig=require('./config/passport');
+const passportConfig = require('./config/passport');
 const mongoose = require('mongoose');
+const sockets = require('./sockets/sockets');
 const config = require('./config/database');
 
 mongoose.connect(config.database);
 
-mongoose.connection.once('open',function(){
+mongoose.connection.once('open', function () {
     console.log(`Database connection successfull !!`);
 });
 
-mongoose.connection.on('error',function(err) {
+mongoose.connection.on('error', function (err) {
     console.log(`Database connection error: ${err}`);
     const mongo = require('mongodb').MongoClient;
 });
@@ -22,6 +23,7 @@ let app = express(); //app is just a callback, similar to function(req,res){}
 let http = require('http').Server(app); //http.Server() works same as http.createServer() method
 let io = require('socket.io')(http);
 //const io = require('socket.io').listen(8888).sockets;
+sockets(io);
 
 const port = process.env.PORT || 8080;
 app.use(cors());
@@ -40,8 +42,8 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('*',function (req,res) {
-    res.sendFile(path.join(__dirname,'public/index.html'));
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 http.listen(port, () => {
