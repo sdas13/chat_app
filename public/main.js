@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ":host,div.container{\r\n    flex-grow: 1;\r\n    display: flex;\r\n    flex-direction: column;   \r\n}"
 
 /***/ }),
 
@@ -108,6 +108,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_validate_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/validate.service */ "./src/app/services/validate.service.ts");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
 /* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./guards/auth.guard */ "./src/app/guards/auth.guard.ts");
+/* harmony import */ var _components_chat_window_chat_window_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/chat-window/chat-window.component */ "./src/app/components/chat-window/chat-window.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -130,12 +131,14 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var appRoutes = [
     { path: '', component: _components_home_home_component__WEBPACK_IMPORTED_MODULE_10__["HomeComponent"] },
     { path: 'register', component: _components_register_register_component__WEBPACK_IMPORTED_MODULE_9__["RegisterComponent"] },
     { path: 'login', component: _components_login_login_component__WEBPACK_IMPORTED_MODULE_8__["LoginComponent"] },
     { path: 'dashboard', component: _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_11__["DashboardComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]] },
-    { path: 'profile', component: _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_12__["ProfileComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]] }
+    { path: 'profile', component: _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_12__["ProfileComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]] },
+    { path: 'chat', component: _components_chat_window_chat_window_component__WEBPACK_IMPORTED_MODULE_16__["ChatWindowComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]] }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -149,7 +152,8 @@ var AppModule = /** @class */ (function () {
                 _components_register_register_component__WEBPACK_IMPORTED_MODULE_9__["RegisterComponent"],
                 _components_home_home_component__WEBPACK_IMPORTED_MODULE_10__["HomeComponent"],
                 _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_11__["DashboardComponent"],
-                _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_12__["ProfileComponent"]
+                _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_12__["ProfileComponent"],
+                _components_chat_window_chat_window_component__WEBPACK_IMPORTED_MODULE_16__["ChatWindowComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -163,6 +167,80 @@ var AppModule = /** @class */ (function () {
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/chat-window/chat-window.component.css":
+/*!******************************************************************!*\
+  !*** ./src/app/components/chat-window/chat-window.component.css ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ":host,div.chat-window{\r\n    flex-grow: 1;\r\n    display: flex;\r\n}\r\n\r\ndiv.chat-window>div{\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\ndiv.messages{\r\n    flex-grow: 1;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: flex-end;\r\n    background-color: #f3f3f3;\r\n    padding: 0 10px 0 10px;\r\n}\r\n\r\n.chat-window .sender p, .chat-window .receiver p{\r\n    margin-bottom: 1px;\r\n    font-size: 1.1em;\r\n}\r\n\r\n.chat-window .sender span, .chat-window .receiver span{\r\n    font-size: 0.8em;\r\n}\r\n\r\n.chat-window .sender{\r\n    background-color: white;\r\n    margin: 5px 0 5px 0;\r\n    padding: 6px 5px 5px 15px;\r\n    border-radius: 15px;\r\n    min-height: 50px;\r\n    min-width: 100px;\r\n    display: inline-block;\r\n}\r\n\r\n.chat-window .receiver{\r\n    background-color: #1b37ff;\r\n    color: white;\r\n    margin: 5px 0 5px 0;\r\n    padding: 6px 15px 5px 5px;\r\n    border-radius: 15px;\r\n    min-height: 50px;\r\n    min-width: 100px;\r\n    display: inline-block;\r\n}\r\n\r\n.chat-window .receiver-block{\r\n    text-align: right;\r\n}"
+
+/***/ }),
+
+/***/ "./src/app/components/chat-window/chat-window.component.html":
+/*!*******************************************************************!*\
+  !*** ./src/app/components/chat-window/chat-window.component.html ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"chat-window\">\n  <!-- <div class=\"conversations\">\n      </div> -->\n  <div class=\"col-sm-12 col-md-10 offset-md-1 chat-box\">\n    <div class=\"messages\">\n      <div class=\"sender-block\">\n        <div class=\"sender\">\n          <p>Hi</p>\n          <span class=\"float-right\">11.20 a.m</span>\n        </div>\n      </div>\n      <div class=\"receiver-block\">\n        <div class=\"receiver\">\n          <p>Hello</p>\n          <span class=\"float-right\">11.21 a.m</span>\n        </div>\n      </div>\n      <div class=\"sender-block\">\n        <div class=\"sender\">\n          <p>Hi</p>\n          <span class=\"float-right\">11.20 a.m</span>\n        </div>\n      </div>\n      <div class=\"receiver-block\">\n        <div class=\"receiver\">\n          <p>Hello</p>\n          <span class=\"float-right\">11.21 a.m</span>\n        </div>\n      </div>\n      <div class=\"sender-block\">\n        <div class=\"sender\">\n          <p>Hi</p>\n          <span class=\"float-right\">11.20 a.m</span>\n        </div>\n      </div>\n      <div class=\"receiver-block\">\n        <div class=\"receiver\">\n          <p>Hello</p>\n          <span class=\"float-right\">11.21 a.m</span>\n        </div>\n      </div>\n    </div>\n    <div class=\"text-box\">\n      <div class=\"input-group\">\n        <input type=\"text\" class=\"form-control\" placeholder=\"Type a message...\">\n        <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary\" type=\"button\">Send</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/components/chat-window/chat-window.component.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/components/chat-window/chat-window.component.ts ***!
+  \*****************************************************************/
+/*! exports provided: ChatWindowComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatWindowComponent", function() { return ChatWindowComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_1__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ChatWindowComponent = /** @class */ (function () {
+    function ChatWindowComponent() {
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__('http://localhost:8080');
+    }
+    ChatWindowComponent.prototype.ngOnInit = function () {
+        this.messages = [];
+        this.socket.on('e1', function () {
+        });
+        this.socket.emit('e2', {});
+    };
+    ChatWindowComponent.prototype.sendMessage = function () {
+        this.socket.emit('e3', {});
+    };
+    ChatWindowComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-chat-window',
+            template: __webpack_require__(/*! ./chat-window.component.html */ "./src/app/components/chat-window/chat-window.component.html"),
+            styles: [__webpack_require__(/*! ./chat-window.component.css */ "./src/app/components/chat-window/chat-window.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ChatWindowComponent);
+    return ChatWindowComponent;
 }());
 
 
@@ -393,7 +471,7 @@ var LoginComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "nav {\r\n  margin-bottom: 20px\r\n}\r\n"
+module.exports = ""
 
 /***/ }),
 
@@ -404,7 +482,7 @@ module.exports = "nav {\r\n  margin-bottom: 20px\r\n}\r\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-primary\">\n  <a class=\"navbar-brand\" href=\"#\">Chat App</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav ml-auto\">\n\n      <li class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/']\">Home</a>\n      </li>\n      <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/dashboard']\">Dashboard</a>\n      </li>\n      <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/profile']\">Profile</a>\n      </li>\n      <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/login']\">Login</a>\n      </li>\n      <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/register']\">Register</a>\n      </li>\n      <li *ngIf=\"authService.loggedIn()\">\n        <a class=\"nav-link\" href=\"#\" (click)=\"onLogout()\">Logout</a>\n      </li>\n\n    </ul>\n  </div>\n</nav>"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-primary\">\n  <a class=\"navbar-brand\" href=\"#\">Chat App</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\"\n    aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav ml-auto\">\n\n      <li class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/']\">Home</a>\n      </li>\n      <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/dashboard']\">Dashboard</a>\n      </li>\n      <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/profile']\">Profile</a>\n      </li>\n      <li *ngIf=\"authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/chat']\">Chat</a>\n      </li>\n      <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/login']\">Login</a>\n      </li>\n      <li *ngIf=\"!authService.loggedIn()\" class=\"nav-item\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact:true}\">\n        <a class=\"nav-link\" [routerLink]=\"['/register']\">Register</a>\n      </li>\n      <li *ngIf=\"authService.loggedIn()\">\n        <a class=\"nav-link\" href=\"#\" (click)=\"onLogout()\">Logout</a>\n      </li>\n\n    </ul>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -882,6 +960,17 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 
 module.exports = __webpack_require__(/*! C:\Users\sudipta.das\Desktop\Xtra\Node\chat_app\angular-src\src\main.ts */"./src/main.ts");
 
+
+/***/ }),
+
+/***/ 1:
+/*!********************!*\
+  !*** ws (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 
