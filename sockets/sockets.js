@@ -1,7 +1,7 @@
-let chat=require('../models/chat');
+let messages = require('../models/message');
 
 function sockets(io) {
-    
+
     //connect to socket.io
     io.on('connection', function (socket) {
         console.log('a user connected');
@@ -14,7 +14,7 @@ function sockets(io) {
 
         //get first 100 chats
         /*
-        chat.find().sort({
+        messages.find().sort({
             _id: 1
         }).limit(100).toArray(function (err, res) {
             if (err)
@@ -24,6 +24,14 @@ function sockets(io) {
             socket.emit('output', res)
         })
 */
+        messages.find({}, ['sender', 'content', 'time_created'], {
+            skip: 0, limit: 100, sort: {
+                time_created: 1
+            }
+        }, function (err, docs) {
+            socket.emit('output', docs);
+        })
+
         //Handle input events
         socket.on('input', function (data) {
             console.log('Input received...', data);

@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {}
 
-  onRegisterSubmit(event) {
+  onRegisterSubmit() {
     
     let user = {
       name: this.name,

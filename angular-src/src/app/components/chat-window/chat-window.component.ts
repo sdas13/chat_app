@@ -11,15 +11,16 @@ export class ChatWindowComponent implements OnInit {
   messageText:string;
   messages:Array<any>;
   socket:SocketIOClient.Socket;
-
   constructor() { 
     this.socket=io('http://localhost:8080');
   }
 
   ngOnInit() {
-    this.messages=[];
-    this.socket.on('e1',function () {
-      
+    this.messages=[{content:'xxdd'}]
+    console.log(this.messages);
+    this.socket.on('output',function (data) {
+        this.messages=data;
+        console.log(this.messages);
     });
     this.socket.emit('e2',{})
   }
