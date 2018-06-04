@@ -10,7 +10,7 @@ const messageSchema = mongoose.Schema({
     time_created: {
         type: Date
     },
-    converstationId: {
+    conversationId: {
         type: Number
     }
 })

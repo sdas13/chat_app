@@ -17,7 +17,6 @@
         </div>
       </div>
       -->
-      {{messages}}
       <div class="receiver-block" *ngFor="let message of messages">
         <div class="receiver">
           <p>{{message.content}}</p>
@@ -27,9 +26,9 @@
     </div>
     <div class="text-box">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Type a message...">
+        <input type="text" class="form-control" placeholder="Type a message..." [(ngModel)]="messageText" name="messageText">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">Send</button>
+          <button class="btn btn-outline-secondary" type="button" (click)="sendMessage()">Send</button>
         </div>
       </div>
     </div>

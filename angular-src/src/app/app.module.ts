@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { SocketService } from './services/socket.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ChatWindowComponent } from './components/chat-window/chat-window.component';
 
@@ -45,7 +46,7 @@ const appRoutes: Routes = [
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, SocketService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

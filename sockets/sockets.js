@@ -36,9 +36,19 @@ function sockets(io) {
         socket.on('input', function (data) {
             console.log('Input received...', data);
 
+            let message={}
+            message.sender='sdas13'
+            message.content=data.messageText
+            message.time_created=new Date()
+            message.conversationId=123
+
+            messages.create(message,function (err, doc) {
+                socket.emit('output',[doc])
+            })
+            /*
             let name = data.name;
             let message = data.message;
-
+           
             //check name & message and send message
             if (name == '' || message == '')
                 sendStatus('Please enter a name or message')
@@ -57,7 +67,7 @@ function sockets(io) {
                     console.log('Emit input message', data)
                 })
             }
-
+             */   
         })
     })
 

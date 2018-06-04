@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import * as io from 'socket.io-client';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -9,24 +9,29 @@ import * as io from 'socket.io-client';
 export class ChatWindowComponent implements OnInit {
 
   messageText:string;
-  messages:Array<any>;
+  messages:Array<any>=[];
   socket:SocketIOClient.Socket;
-  constructor() { 
-    this.socket=io('http://localhost:8080');
+
+  constructor(private _socketService:SocketService, private _zone:NgZone) { 
+    this.socket=_socketService.getSocket();
   }
 
   ngOnInit() {
-    this.messages=[{content:'xxdd'}]
-    console.log(this.messages);
-    this.socket.on('output',function (data) {
-        this.messages=data;
-        console.log(this.messages);
-    });
-    this.socket.emit('e2',{})
+    this.socket.on('output', (data) => {
+      console.log('Output received...',data);
+      this._zone.run(()=>{
+        data.forEach(element => {
+         this.messages.push(element) 
+        })
+      })
+    })
   }
 
   sendMessage(){
-    this.socket.emit('e3',{})
+    this.socket.emit('input',{
+      messageText:this.messageText
+    })
+    this.messageText=null;
   }
 
 }
