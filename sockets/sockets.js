@@ -12,18 +12,6 @@ function sockets(io) {
             socket.emit('status', s);
         }
 
-        //get first 100 chats
-        /*
-        messages.find().sort({
-            _id: 1
-        }).limit(100).toArray(function (err, res) {
-            if (err)
-                throw err
-
-            //Emit messages
-            socket.emit('output', res)
-        })
-*/
         messages.find({}, ['sender', 'content', 'time_created'], {
             skip: 0, limit: 100, sort: {
                 time_created: 1
@@ -32,18 +20,34 @@ function sockets(io) {
             socket.emit('output', docs);
         })
 
+/*
+        const jsonData=[
+            {sender:'sdas13',content:'Hello'},
+            {sender:'dbasak',content:'Hi'},
+            {sender:'dbasak',content:'Howdy'},
+            {sender:'sdas13',content:'Hola'},
+            {sender:'sdas13',content:'Hello'},
+            {sender:'dbasak',content:'Hi'},
+            {sender:'dbasak',content:'Howdy'},
+            {sender:'sdas13',content:'Hola'}
+        ]
+        socket.emit('output',jsonData);
+
+        io.emit('output',[{sender:'sdas13',content:data.messageText}]);
+*/
+       
         //Handle input events
         socket.on('input', function (data) {
             console.log('Input received...', data);
 
             let message={}
-            message.sender='sdas13'
-            message.content=data.messageText
-            message.time_created=new Date()
+            message.sender=data.sender
+            message.content=data.content
+            message.time_created=data.time_created
             message.conversationId=123
-
+            
             messages.create(message,function (err, doc) {
-                socket.emit('output',[doc])
+                io.emit('output',[doc])
             })
             /*
             let name = data.name;

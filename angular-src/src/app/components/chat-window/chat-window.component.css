@@ -10,33 +10,33 @@ div.chat-window>div{
 
 div.messages{
     flex-grow: 1;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     justify-content: flex-end;
     background-color: #f3f3f3;
     padding: 0 10px 0 10px;
+    overflow-y: scroll;
 }
 
-.chat-window .sender p, .chat-window .receiver p{
+.chat-window .other-block p, .chat-window .self-block p{
     margin-bottom: 1px;
     font-size: 1.1em;
 }
 
-.chat-window .sender span, .chat-window .receiver span{
+.chat-window .other-block span, .chat-window .self-block span{
     font-size: 0.8em;
 }
 
-.chat-window .sender{
-    background-color: white;
-    margin: 5px 0 5px 0;
-    padding: 6px 5px 5px 15px;
-    border-radius: 15px;
-    min-height: 50px;
-    min-width: 100px;
-    display: inline-block;
+.chat-window .self-block,.chat-window .other-block {
+    display: flex;
 }
 
-.chat-window .receiver{
+.chat-window .self-block{
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.chat-window .self-block>div{
     background-color: #1b37ff;
     color: white;
     margin: 5px 0 5px 0;
@@ -44,9 +44,18 @@ div.messages{
     border-radius: 15px;
     min-height: 50px;
     min-width: 100px;
-    display: inline-block;
+    max-width: 85%;
+    height:fit-content;
 }
 
-.chat-window .receiver-block{
-    text-align: right;
+.chat-window .other-block>div{
+    background-color: white;
+    margin: 5px 0 5px 0;
+    padding: 6px 5px 5px 15px;
+    border-radius: 15px;
+    min-height: 50px;
+    min-width: 100px;
+    max-width: 85%;    
+    border: 1px solid gainsboro;
+    height:fit-content;
 }
