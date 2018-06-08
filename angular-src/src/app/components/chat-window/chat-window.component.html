@@ -1,9 +1,6 @@
 <div class="chat-window">
-  <!-- <div class="conversations">
-      </div> -->
   <div class="col-sm-12 col-md-10 offset-md-1 chat-box">
     <div class="messages" #messagesblock [scrollTop]="messagesblock.scrollHeight" >
-
       <div [ngClass]="blockClass(message.sender)" *ngFor="let message of messages">
         <div>
           <p>{{message.content}}</p>

@@ -12,17 +12,19 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ChatWindowComponent } from './components/chat-window/chat-window.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { SocketService } from './services/socket.service';
 import { AuthGuard } from './guards/auth.guard';
-import { ChatWindowComponent } from './components/chat-window/chat-window.component';
+import { LoginGuard } from './guards/login.guard';
+
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent, canActivate:[LoginGuard] },
+  { path: 'register', component: RegisterComponent, canActivate:[LoginGuard] },
+  { path: 'login', component: LoginComponent,canActivate:[LoginGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'chat', component: ChatWindowComponent, canActivate:[AuthGuard]}
@@ -46,7 +48,7 @@ const appRoutes: Routes = [
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [ValidateService, AuthService, SocketService, AuthGuard],
+  providers: [ValidateService, AuthService, SocketService, AuthGuard, LoginGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

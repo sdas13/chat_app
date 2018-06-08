@@ -33,7 +33,7 @@ function sockets(io) {
         ]
         socket.emit('output',jsonData);
 
-        io.emit('output',[{sender:'sdas13',content:data.messageText}]);
+        
 */
        
         //Handle input events
@@ -45,7 +45,7 @@ function sockets(io) {
             message.content=data.content
             message.time_created=data.time_created
             message.conversationId=123
-            
+            // io.emit('output',[{sender:'sdas13',content:data.messageText}]);    
             messages.create(message,function (err, doc) {
                 io.emit('output',[doc])
             })
