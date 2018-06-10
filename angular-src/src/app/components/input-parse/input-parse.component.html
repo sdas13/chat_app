@@ -1,0 +1,14 @@
+<!-- <input type="text" class="form-control" [ngModel]="formatter(txt)" (ngModelChange)="parser($event)"> -->
+<input type="text" class="form-control" [ngModel]="formatter(txt)" (ngModelChange)="parser($event)" (blur)="parseInput()" [ngClass]="{
+  'is-valid': validInput, 
+  'is-invalid':!validInput
+}">
+<!--
+<p>
+  {{txt}}
+</p>
+<p>
+  {{txtModel}}
+</p>
+
+-->
