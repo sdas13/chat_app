@@ -1,14 +1,20 @@
 <!-- <input type="text" class="form-control" [ngModel]="formatter(txt)" (ngModelChange)="parser($event)"> -->
-<input type="text" class="form-control" [ngModel]="formatter(txt)" (ngModelChange)="parser($event)" (blur)="parseInput()" [ngClass]="{
-  'is-valid': validInput, 
-  'is-invalid':!validInput
+<div class="input-group mb-3">
+  <input id="txtbox" placeholder="Account Number" type="text" class="form-control" (keydown)="restrictNumber($event)" [ngModel]="anFormatter(anTxt)"
+    (ngModelChange)="anParser($event)" (blur)="maskInput()" [ngClass]="{
+  'is-valid': anValidInput, 
+  'is-invalid':!anValidInput
 }">
+  <div class="input-group-append fa-container" (click)="unmaskInput()">
+    <span class="input-group-text" id="addon">
+      <i class="fas fa-eye"></i>
+    </span>
+  </div>
+</div>
 <!--
-<p>
-  {{txt}}
-</p>
-<p>
-  {{txtModel}}
-</p>
+<input placeholder="SSN" type="text" class="form-control" (keypress)="restrictNumber($event)" [ngModel]="ssnFormatter(ssnTxt)" (ngModelChange)="ssnParser($event)" (blur)="parseSsnInput()" [ngClass]="{
+  'is-valid': ssnValidInput, 
+  'is-invalid':!ssnValidInput
+}">
 
 -->

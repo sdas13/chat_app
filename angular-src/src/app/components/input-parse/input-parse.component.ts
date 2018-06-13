@@ -7,34 +7,85 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputParseComponent implements OnInit {
 
-  txt:string='';
-  txtModel:string='';
-  validInput:boolean=false;
+  anTxt: string = '';
+  anTxtModel: string = '';
+  anValidInput: boolean = false;
+  ssnTxt: string = '';
+  ssnTxtModel: string = '';
+  ssnValidInput: boolean = false;
 
   constructor() { }
 
-  ngOnInit() {  }
+  ngOnInit() { }
 
-  formatter(value){
-    //console.log('formater',value);
-      return value;
+  restrictNumber(event: any) {
+    let regex = /[0-9]/g;
+  
+  //  console.log(event);
+    //console.log(this.anTxt);
+  
+    
+    if (event.code == 'Backspace')
+      return;
+    else if (event.ctrlKey)
+      return;
+    else if(event.shiftKey)
+      return;  
+    else if (!regex.test(event.key) || this.anTxt.length >= 10)
+      event.preventDefault();
   }
 
-  parser(value){
-      //console.log('Parser',value)
-      this.txt=value;
+  anFormatter(value) {
+    //console.log('formatter',value);
+    return value;
   }
 
-  parseInput(){
+  anParser(value) {
+    //console.log('Parser',value)
+    this.anTxt = value;
+  }
+
+  maskInput() {
     //console.log('In blur');
-    if(this.txt.length==10){
-      this.validInput=true;
-      this.txtModel=this.txt;    
-      this.txt='xxxxxx'+this.txt.slice(-3);
-      console.log(this.txtModel);  
+    console.log(this.anTxt);
+
+    if (this.anTxt.length == 10) {
+      this.anValidInput = true;
+      this.anTxtModel = this.anTxt;
+      this.anTxt = 'xxxxxxx' + this.anTxt.slice(-3);
+      console.log(this.anTxtModel);
     }
-    else
-    this.validInput=false;    
+    else {
+      this.anValidInput = false;
+      this.anTxtModel = this.anTxt;
+    }
   }
+
+  unmaskInput() {
+    this.anTxt = this.anTxtModel;
+  }
+
+
+
+  /*
+  ssnFormatter(value){
+    let regex=/[-\s]/g
+
+    let temp=value.replace(regex,'')
+    console.log('formatter',value,temp);
+    if(temp && temp.length<=4)
+    return `${temp}-  -    `
+      return '    -   -    ';
+  }
+
+  ssnParser(value){
+      //console.log('Parser',value)
+      this.ssnTxt=value;
+  }
+
+  parseSsnInput(){
+    //console.log('In blur');
+  }
+ */
 
 }
