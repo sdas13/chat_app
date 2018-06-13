@@ -21,15 +21,8 @@ export class InputParseComponent implements OnInit {
 
     this.accnumInput.nativeElement.addEventListener('keydown', (event: any) => {
       let regex = /[0-9]/g;
-
-      // console.log(event);
-      //console.log(this.anTxt);
-
-      if (event.code == 'Backspace')
-        return;
-      else if (event.ctrlKey)
-        return;
-      else if (event.shiftKey)
+      
+      if (event.ctrlKey || event.shiftKey || event.code == 'Backspace' || event.code == 'Delete' || event.code == 'ArrowRight' || event.code == 'ArrowLeft')
         return;
       else if (!regex.test(event.key) || this.anTxt.length >= 10)
         event.preventDefault();
@@ -38,9 +31,15 @@ export class InputParseComponent implements OnInit {
     this.accnumInput.nativeElement.addEventListener('paste', (event: any) => {
       let regex = /[0-9]/g;
       let clipboardData = event.clipboardData.getData('text');
-      if (isNaN(Number(clipboardData)) || !regex.test(clipboardData) || clipboardData.length>10)
+      if (isNaN(Number(clipboardData)) || !regex.test(clipboardData))
         event.preventDefault();
+    })
 
+    this.accnumInput.nativeElement.addEventListener('keyup',(event:any)=>{
+      this.anTxt=this.anTxt.substr(0,10);      
+
+      //if(this.anTxt.length==10)
+        //this.accnumInput.nativeElement.blur()
     })
 
   }
@@ -63,16 +62,19 @@ export class InputParseComponent implements OnInit {
       this.anValidInput = true;
       this.anTxtModel = this.anTxt;
       this.anTxt = 'xxxxxxx' + this.anTxt.slice(-3);
+      this.accnumInput.nativeElement.disabled=true;
       console.log(this.anTxtModel);
     }
     else {
       this.anValidInput = false;
       this.anTxtModel = this.anTxt;
     }
+    
   }
 
   unmaskInput() {
     this.anTxt = this.anTxtModel;
+    this.accnumInput.nativeElement.disabled=false;
   }
 
 
