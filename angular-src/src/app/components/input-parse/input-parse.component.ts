@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-input-parse',
@@ -13,26 +13,36 @@ export class InputParseComponent implements OnInit {
   ssnTxt: string = '';
   ssnTxtModel: string = '';
   ssnValidInput: boolean = false;
+  @ViewChild('accnum') accnumInput: ElementRef;
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
 
-  restrictNumber(event: any) {
-    let regex = /[0-9]/g;
-  
-  //  console.log(event);
-    //console.log(this.anTxt);
-  
-    
-    if (event.code == 'Backspace')
-      return;
-    else if (event.ctrlKey)
-      return;
-    else if(event.shiftKey)
-      return;  
-    else if (!regex.test(event.key) || this.anTxt.length >= 10)
-      event.preventDefault();
+    this.accnumInput.nativeElement.addEventListener('keydown', (event: any) => {
+      let regex = /[0-9]/g;
+
+      // console.log(event);
+      //console.log(this.anTxt);
+
+      if (event.code == 'Backspace')
+        return;
+      else if (event.ctrlKey)
+        return;
+      else if (event.shiftKey)
+        return;
+      else if (!regex.test(event.key) || this.anTxt.length >= 10)
+        event.preventDefault();
+    })
+
+    this.accnumInput.nativeElement.addEventListener('paste', (event: any) => {
+      let regex = /[0-9]/g;
+      let clipboardData = event.clipboardData.getData('text');
+      if (isNaN(Number(clipboardData)) || !regex.test(clipboardData) || clipboardData.length>10)
+        event.preventDefault();
+
+    })
+
   }
 
   anFormatter(value) {

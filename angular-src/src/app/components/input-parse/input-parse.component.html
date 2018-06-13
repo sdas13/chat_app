@@ -1,6 +1,6 @@
 <!-- <input type="text" class="form-control" [ngModel]="formatter(txt)" (ngModelChange)="parser($event)"> -->
 <div class="input-group mb-3">
-  <input id="txtbox" placeholder="Account Number" type="text" class="form-control" (keydown)="restrictNumber($event)" [ngModel]="anFormatter(anTxt)"
+  <input #accnum placeholder="Account Number" type="text" class="form-control" [ngModel]="anFormatter(anTxt)"
     (ngModelChange)="anParser($event)" (blur)="maskInput()" [ngClass]="{
   'is-valid': anValidInput, 
   'is-invalid':!anValidInput
